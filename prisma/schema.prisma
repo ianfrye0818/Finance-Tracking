@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  accounts     Account[]
+  transactions Transaction[]
+  budgets      Budget[]
+}
+
+model Account {
+  id        String   @id @default(uuid())
+  name      String
+  balance   Float
+  type      String // checking, savings, credit, investment, loan, other
+  notes     String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@index([userId])
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parentId      String?
+  parent        Category?     @relation("CategoryToSubcategory", fields: [parentId], references: [id])
+  subcategories Category[]    @relation("CategoryToSubcategory")
+  transactions  Transaction[]
+  budgets       Budget[]
+
+  @@unique([name, parentId])
+  @@index([parentId])
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  transactions TransactionToTag[]
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  date        DateTime
+  payee       String
+  amount      Float
+  notes       String?
+  isRecurring Boolean  @default(false)
+  reminder    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  accountId  String
+  account    Account            @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category           @relation(fields: [categoryId], references: [id])
+  userId     String
+  user       User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tags       TransactionToTag[]
+
+  @@index([accountId])
+  @@index([categoryId])
+  @@index([userId])
+  @@index([date])
+}
+
+model TransactionToTag {
+  transactionId String
+  transaction   Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  tagId         String
+  tag           Tag         @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([transactionId, tagId])
+  @@index([transactionId])
+  @@index([tagId])
+}
+
+model Budget {
+  id        String   @id @default(uuid())
+  budgeted  Float
+  spent     Float    @default(0)
+  period    String // weekly, monthly, quarterly, yearly
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, period, userId])
+  @@index([categoryId])
+  @@index([userId])
+}
