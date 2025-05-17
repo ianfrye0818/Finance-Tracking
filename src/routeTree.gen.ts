@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as RootLayoutRouteImport } from './routes/_rootLayout/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as RootLayoutAuthRouteImport } from './routes/_rootLayout/_auth/route'
 import { Route as RootLayoutTransactionsIndexImport } from './routes/_rootLayout/transactions/index'
 import { Route as RootLayoutSettingsIndexImport } from './routes/_rootLayout/settings/index'
 import { Route as RootLayoutReportsIndexImport } from './routes/_rootLayout/reports/index'
@@ -20,6 +21,12 @@ import { Route as RootLayoutImportIndexImport } from './routes/_rootLayout/impor
 import { Route as RootLayoutDashboardIndexImport } from './routes/_rootLayout/dashboard/index'
 import { Route as RootLayoutBudgetsIndexImport } from './routes/_rootLayout/budgets/index'
 import { Route as RootLayoutAccountsIndexImport } from './routes/_rootLayout/accounts/index'
+import { Route as RootLayoutAuthTermsIndexImport } from './routes/_rootLayout/_auth/terms/index'
+import { Route as RootLayoutAuthSignupIndexImport } from './routes/_rootLayout/_auth/signup/index'
+import { Route as RootLayoutAuthResetPasswordIndexImport } from './routes/_rootLayout/_auth/reset-password/index'
+import { Route as RootLayoutAuthPrivacyIndexImport } from './routes/_rootLayout/_auth/privacy/index'
+import { Route as RootLayoutAuthLoginIndexImport } from './routes/_rootLayout/_auth/login/index'
+import { Route as RootLayoutAuthForgotPasswordIndexImport } from './routes/_rootLayout/_auth/forgot-password/index'
 
 // Create/Update Routes
 
@@ -32,6 +39,11 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const RootLayoutAuthRouteRoute = RootLayoutAuthRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => RootLayoutRouteRoute,
 } as any)
 
 const RootLayoutTransactionsIndexRoute =
@@ -77,6 +89,46 @@ const RootLayoutAccountsIndexRoute = RootLayoutAccountsIndexImport.update({
   getParentRoute: () => RootLayoutRouteRoute,
 } as any)
 
+const RootLayoutAuthTermsIndexRoute = RootLayoutAuthTermsIndexImport.update({
+  id: '/terms/',
+  path: '/terms/',
+  getParentRoute: () => RootLayoutAuthRouteRoute,
+} as any)
+
+const RootLayoutAuthSignupIndexRoute = RootLayoutAuthSignupIndexImport.update({
+  id: '/signup/',
+  path: '/signup/',
+  getParentRoute: () => RootLayoutAuthRouteRoute,
+} as any)
+
+const RootLayoutAuthResetPasswordIndexRoute =
+  RootLayoutAuthResetPasswordIndexImport.update({
+    id: '/reset-password/',
+    path: '/reset-password/',
+    getParentRoute: () => RootLayoutAuthRouteRoute,
+  } as any)
+
+const RootLayoutAuthPrivacyIndexRoute = RootLayoutAuthPrivacyIndexImport.update(
+  {
+    id: '/privacy/',
+    path: '/privacy/',
+    getParentRoute: () => RootLayoutAuthRouteRoute,
+  } as any,
+)
+
+const RootLayoutAuthLoginIndexRoute = RootLayoutAuthLoginIndexImport.update({
+  id: '/login/',
+  path: '/login/',
+  getParentRoute: () => RootLayoutAuthRouteRoute,
+} as any)
+
+const RootLayoutAuthForgotPasswordIndexRoute =
+  RootLayoutAuthForgotPasswordIndexImport.update({
+    id: '/forgot-password/',
+    path: '/forgot-password/',
+    getParentRoute: () => RootLayoutAuthRouteRoute,
+  } as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -94,6 +146,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof RootLayoutRouteImport
       parentRoute: typeof rootRoute
+    }
+    '/_rootLayout/_auth': {
+      id: '/_rootLayout/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof RootLayoutAuthRouteImport
+      parentRoute: typeof RootLayoutRouteImport
     }
     '/_rootLayout/accounts/': {
       id: '/_rootLayout/accounts/'
@@ -144,12 +203,77 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RootLayoutTransactionsIndexImport
       parentRoute: typeof RootLayoutRouteImport
     }
+    '/_rootLayout/_auth/forgot-password/': {
+      id: '/_rootLayout/_auth/forgot-password/'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof RootLayoutAuthForgotPasswordIndexImport
+      parentRoute: typeof RootLayoutAuthRouteImport
+    }
+    '/_rootLayout/_auth/login/': {
+      id: '/_rootLayout/_auth/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof RootLayoutAuthLoginIndexImport
+      parentRoute: typeof RootLayoutAuthRouteImport
+    }
+    '/_rootLayout/_auth/privacy/': {
+      id: '/_rootLayout/_auth/privacy/'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof RootLayoutAuthPrivacyIndexImport
+      parentRoute: typeof RootLayoutAuthRouteImport
+    }
+    '/_rootLayout/_auth/reset-password/': {
+      id: '/_rootLayout/_auth/reset-password/'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof RootLayoutAuthResetPasswordIndexImport
+      parentRoute: typeof RootLayoutAuthRouteImport
+    }
+    '/_rootLayout/_auth/signup/': {
+      id: '/_rootLayout/_auth/signup/'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof RootLayoutAuthSignupIndexImport
+      parentRoute: typeof RootLayoutAuthRouteImport
+    }
+    '/_rootLayout/_auth/terms/': {
+      id: '/_rootLayout/_auth/terms/'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof RootLayoutAuthTermsIndexImport
+      parentRoute: typeof RootLayoutAuthRouteImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface RootLayoutAuthRouteRouteChildren {
+  RootLayoutAuthForgotPasswordIndexRoute: typeof RootLayoutAuthForgotPasswordIndexRoute
+  RootLayoutAuthLoginIndexRoute: typeof RootLayoutAuthLoginIndexRoute
+  RootLayoutAuthPrivacyIndexRoute: typeof RootLayoutAuthPrivacyIndexRoute
+  RootLayoutAuthResetPasswordIndexRoute: typeof RootLayoutAuthResetPasswordIndexRoute
+  RootLayoutAuthSignupIndexRoute: typeof RootLayoutAuthSignupIndexRoute
+  RootLayoutAuthTermsIndexRoute: typeof RootLayoutAuthTermsIndexRoute
+}
+
+const RootLayoutAuthRouteRouteChildren: RootLayoutAuthRouteRouteChildren = {
+  RootLayoutAuthForgotPasswordIndexRoute:
+    RootLayoutAuthForgotPasswordIndexRoute,
+  RootLayoutAuthLoginIndexRoute: RootLayoutAuthLoginIndexRoute,
+  RootLayoutAuthPrivacyIndexRoute: RootLayoutAuthPrivacyIndexRoute,
+  RootLayoutAuthResetPasswordIndexRoute: RootLayoutAuthResetPasswordIndexRoute,
+  RootLayoutAuthSignupIndexRoute: RootLayoutAuthSignupIndexRoute,
+  RootLayoutAuthTermsIndexRoute: RootLayoutAuthTermsIndexRoute,
+}
+
+const RootLayoutAuthRouteRouteWithChildren =
+  RootLayoutAuthRouteRoute._addFileChildren(RootLayoutAuthRouteRouteChildren)
+
 interface RootLayoutRouteRouteChildren {
+  RootLayoutAuthRouteRoute: typeof RootLayoutAuthRouteRouteWithChildren
   RootLayoutAccountsIndexRoute: typeof RootLayoutAccountsIndexRoute
   RootLayoutBudgetsIndexRoute: typeof RootLayoutBudgetsIndexRoute
   RootLayoutDashboardIndexRoute: typeof RootLayoutDashboardIndexRoute
@@ -160,6 +284,7 @@ interface RootLayoutRouteRouteChildren {
 }
 
 const RootLayoutRouteRouteChildren: RootLayoutRouteRouteChildren = {
+  RootLayoutAuthRouteRoute: RootLayoutAuthRouteRouteWithChildren,
   RootLayoutAccountsIndexRoute: RootLayoutAccountsIndexRoute,
   RootLayoutBudgetsIndexRoute: RootLayoutBudgetsIndexRoute,
   RootLayoutDashboardIndexRoute: RootLayoutDashboardIndexRoute,
@@ -175,7 +300,7 @@ const RootLayoutRouteRouteWithChildren = RootLayoutRouteRoute._addFileChildren(
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof RootLayoutRouteRouteWithChildren
+  '': typeof RootLayoutAuthRouteRouteWithChildren
   '/accounts': typeof RootLayoutAccountsIndexRoute
   '/budgets': typeof RootLayoutBudgetsIndexRoute
   '/dashboard': typeof RootLayoutDashboardIndexRoute
@@ -183,11 +308,17 @@ export interface FileRoutesByFullPath {
   '/reports': typeof RootLayoutReportsIndexRoute
   '/settings': typeof RootLayoutSettingsIndexRoute
   '/transactions': typeof RootLayoutTransactionsIndexRoute
+  '/forgot-password': typeof RootLayoutAuthForgotPasswordIndexRoute
+  '/login': typeof RootLayoutAuthLoginIndexRoute
+  '/privacy': typeof RootLayoutAuthPrivacyIndexRoute
+  '/reset-password': typeof RootLayoutAuthResetPasswordIndexRoute
+  '/signup': typeof RootLayoutAuthSignupIndexRoute
+  '/terms': typeof RootLayoutAuthTermsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof RootLayoutRouteRouteWithChildren
+  '': typeof RootLayoutAuthRouteRouteWithChildren
   '/accounts': typeof RootLayoutAccountsIndexRoute
   '/budgets': typeof RootLayoutBudgetsIndexRoute
   '/dashboard': typeof RootLayoutDashboardIndexRoute
@@ -195,12 +326,19 @@ export interface FileRoutesByTo {
   '/reports': typeof RootLayoutReportsIndexRoute
   '/settings': typeof RootLayoutSettingsIndexRoute
   '/transactions': typeof RootLayoutTransactionsIndexRoute
+  '/forgot-password': typeof RootLayoutAuthForgotPasswordIndexRoute
+  '/login': typeof RootLayoutAuthLoginIndexRoute
+  '/privacy': typeof RootLayoutAuthPrivacyIndexRoute
+  '/reset-password': typeof RootLayoutAuthResetPasswordIndexRoute
+  '/signup': typeof RootLayoutAuthSignupIndexRoute
+  '/terms': typeof RootLayoutAuthTermsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_rootLayout': typeof RootLayoutRouteRouteWithChildren
+  '/_rootLayout/_auth': typeof RootLayoutAuthRouteRouteWithChildren
   '/_rootLayout/accounts/': typeof RootLayoutAccountsIndexRoute
   '/_rootLayout/budgets/': typeof RootLayoutBudgetsIndexRoute
   '/_rootLayout/dashboard/': typeof RootLayoutDashboardIndexRoute
@@ -208,6 +346,12 @@ export interface FileRoutesById {
   '/_rootLayout/reports/': typeof RootLayoutReportsIndexRoute
   '/_rootLayout/settings/': typeof RootLayoutSettingsIndexRoute
   '/_rootLayout/transactions/': typeof RootLayoutTransactionsIndexRoute
+  '/_rootLayout/_auth/forgot-password/': typeof RootLayoutAuthForgotPasswordIndexRoute
+  '/_rootLayout/_auth/login/': typeof RootLayoutAuthLoginIndexRoute
+  '/_rootLayout/_auth/privacy/': typeof RootLayoutAuthPrivacyIndexRoute
+  '/_rootLayout/_auth/reset-password/': typeof RootLayoutAuthResetPasswordIndexRoute
+  '/_rootLayout/_auth/signup/': typeof RootLayoutAuthSignupIndexRoute
+  '/_rootLayout/_auth/terms/': typeof RootLayoutAuthTermsIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -222,6 +366,12 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/transactions'
+    | '/forgot-password'
+    | '/login'
+    | '/privacy'
+    | '/reset-password'
+    | '/signup'
+    | '/terms'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -233,10 +383,17 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/transactions'
+    | '/forgot-password'
+    | '/login'
+    | '/privacy'
+    | '/reset-password'
+    | '/signup'
+    | '/terms'
   id:
     | '__root__'
     | '/'
     | '/_rootLayout'
+    | '/_rootLayout/_auth'
     | '/_rootLayout/accounts/'
     | '/_rootLayout/budgets/'
     | '/_rootLayout/dashboard/'
@@ -244,6 +401,12 @@ export interface FileRouteTypes {
     | '/_rootLayout/reports/'
     | '/_rootLayout/settings/'
     | '/_rootLayout/transactions/'
+    | '/_rootLayout/_auth/forgot-password/'
+    | '/_rootLayout/_auth/login/'
+    | '/_rootLayout/_auth/privacy/'
+    | '/_rootLayout/_auth/reset-password/'
+    | '/_rootLayout/_auth/signup/'
+    | '/_rootLayout/_auth/terms/'
   fileRoutesById: FileRoutesById
 }
 
@@ -277,6 +440,7 @@ export const routeTree = rootRoute
     "/_rootLayout": {
       "filePath": "_rootLayout/route.tsx",
       "children": [
+        "/_rootLayout/_auth",
         "/_rootLayout/accounts/",
         "/_rootLayout/budgets/",
         "/_rootLayout/dashboard/",
@@ -284,6 +448,18 @@ export const routeTree = rootRoute
         "/_rootLayout/reports/",
         "/_rootLayout/settings/",
         "/_rootLayout/transactions/"
+      ]
+    },
+    "/_rootLayout/_auth": {
+      "filePath": "_rootLayout/_auth/route.tsx",
+      "parent": "/_rootLayout",
+      "children": [
+        "/_rootLayout/_auth/forgot-password/",
+        "/_rootLayout/_auth/login/",
+        "/_rootLayout/_auth/privacy/",
+        "/_rootLayout/_auth/reset-password/",
+        "/_rootLayout/_auth/signup/",
+        "/_rootLayout/_auth/terms/"
       ]
     },
     "/_rootLayout/accounts/": {
@@ -313,6 +489,30 @@ export const routeTree = rootRoute
     "/_rootLayout/transactions/": {
       "filePath": "_rootLayout/transactions/index.tsx",
       "parent": "/_rootLayout"
+    },
+    "/_rootLayout/_auth/forgot-password/": {
+      "filePath": "_rootLayout/_auth/forgot-password/index.tsx",
+      "parent": "/_rootLayout/_auth"
+    },
+    "/_rootLayout/_auth/login/": {
+      "filePath": "_rootLayout/_auth/login/index.tsx",
+      "parent": "/_rootLayout/_auth"
+    },
+    "/_rootLayout/_auth/privacy/": {
+      "filePath": "_rootLayout/_auth/privacy/index.tsx",
+      "parent": "/_rootLayout/_auth"
+    },
+    "/_rootLayout/_auth/reset-password/": {
+      "filePath": "_rootLayout/_auth/reset-password/index.tsx",
+      "parent": "/_rootLayout/_auth"
+    },
+    "/_rootLayout/_auth/signup/": {
+      "filePath": "_rootLayout/_auth/signup/index.tsx",
+      "parent": "/_rootLayout/_auth"
+    },
+    "/_rootLayout/_auth/terms/": {
+      "filePath": "_rootLayout/_auth/terms/index.tsx",
+      "parent": "/_rootLayout/_auth"
     }
   }
 }

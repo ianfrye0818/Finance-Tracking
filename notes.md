@@ -1,0 +1,51 @@
+## TODO
+- [ ] Transaction table should include:
+  - [ ] Cleared
+  - [ ] Amount of transaciton  & amount left in account with running total
+  - [ ] Notes for the transaction
+  - [ ] Ability to update each part of the transaction without having to open modal
+  - [ ] Filtering needs fixed
+  - [ ] Convert to tanstack table
+- [ ] Ability to add reoccuring bils
+- [ ] Ability to add reoccuring income
+- [ ] Ability to connect to bank to download transacitons
+- [ ] Ability to upload transactions from bank
+- [ ] Come up with a name
+- [ ] Connect to db
+- [ ] Get rid of mock data
+- [ ] Create repositories and dataclasses
+- [ ] Implement authentication
+- [ ] create the ability to back up data and schedule backups
+- [ ] Ability to add a cloud service to back data up to
+- [ ] Ability to save data for a specified amount of time or unlimited
+- [ ] Ability to wipe all data and restart
+- [ ] Ability to import data from file
+- [ ] Ability to export data from file
+- [ ] Users should be able to update their settings to include
+  - [ ] Default currency
+  - [ ] default account
+  - [ ] show cents
+  - [ ] color scheme
+  - [ ] date format
+  - [ ] number format
+- [ ] IMplement notifications
+- [ ] Should be able to save a category/subcategory to the payee
+- [ ] Should be able to select what page you want to default to including last page
+- [ ] larget numbers should include commas
+- [ ] Accounts page formattnig on smaller screen should stack vertically
+- [ ] create login page
+- [ ] create sign up page
+- [ ] add ability to set annual budgets
+- [ ] add ability to set qtrly budets
+- [ ] on budget breakdowns - anything under 10% should be in a "other" category that will display in a tool tip if hovered on. 
+- [ ] Left sidebar like in quicken showing all accounts and their balances as well as open/closed accounts and total networth
+- [ ] Add abilty to close and or hide accounts
+  - [ ] This should remove the account from the regular flow if the account is closed 
+  - [ ] This should remove the total from the networth if the account is closed or hidden
+- [ ] Monthly trends chart not working on reporting page
+- [ ] ability to run YOY reports
+- [ ] ability to download reports
+- [ ] Income vs expense on reports page needs to have 0's clipped at 2
+- [ ] Expenses by category on reports page should have the category hidden if less than 10% with a hover tooltip avail if they wnat more detail
+- [ ] Should have the abilty to build custom reports
+- [ ] 

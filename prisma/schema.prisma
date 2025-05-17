@@ -49,6 +49,8 @@ model Category {
   transactions  Transaction[]
   budgets       Budget[]
 
+  type String? // income, expense, transfer, other
+
   @@unique([name, parentId])
   @@index([parentId])
 }

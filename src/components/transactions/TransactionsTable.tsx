@@ -42,7 +42,6 @@ import {
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Calendar } from '@/components/ui/calendar'
 import { cn } from '@/lib/utils'
 import { AddTransactionDialog } from './AddTransactionDialog'
 import { DeleteTransactionDialog } from './DeleteTransactionDialog'
@@ -154,36 +153,36 @@ export function TransactionsTable() {
   const [selectedTransactions, setSelectedTransactions] = useState<number[]>([])
 
   // Filter transactions based on search, category, account, and date range
-  const filteredTransactions = transactions.filter((transaction) => {
-    const matchesSearch =
-      searchQuery === '' ||
-      transaction.payee.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      transaction.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      transaction.subcategory
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      transaction.tags.some((tag) =>
-        tag.toLowerCase().includes(searchQuery.toLowerCase()),
-      ) ||
-      transaction.notes.toLowerCase().includes(searchQuery.toLowerCase())
+  // const filteredTransactions = transactions.filter((transaction) => {
+  //   const matchesSearch =
+  //     searchQuery === '' ||
+  //     transaction.payee.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     transaction.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     transaction.subcategory
+  //       .toLowerCase()
+  //       .includes(searchQuery.toLowerCase()) ||
+  //     transaction.tags.some((tag) =>
+  //       tag.toLowerCase().includes(searchQuery.toLowerCase()),
+  //     ) ||
+  //     transaction.notes.toLowerCase().includes(searchQuery.toLowerCase())
 
-    const matchesCategory =
-      selectedCategory === null || transaction.category === selectedCategory
-    const matchesAccount =
-      selectedAccount === null || transaction.account === selectedAccount
+  //   const matchesCategory =
+  //     selectedCategory === null || transaction.category === selectedCategory
+  //   const matchesAccount =
+  //     selectedAccount === null || transaction.account === selectedAccount
 
-    const transactionDate = new Date(transaction.date)
-    const matchesDateRange =
-      (dateRange.from === null || transactionDate >= dateRange.from) &&
-      (dateRange.to === null || transactionDate <= dateRange.to!)
+  //   const transactionDate = new Date(transaction.date)
+  //   const matchesDateRange =
+  //     (dateRange.from === null || transactionDate >= dateRange.from) &&
+  //     (dateRange.to === null || transactionDate <= dateRange.to!)
 
-    return (
-      matchesSearch && matchesCategory && matchesAccount && matchesDateRange
-    )
-  })
+  //   return (
+  //     matchesSearch && matchesCategory && matchesAccount && matchesDateRange
+  //   )
+  // })
 
   // Sort transactions
-  const sortedTransactions = [...filteredTransactions].sort((a, b) => {
+  const sortedTransactions = [...transactions].sort((a, b) => {
     const key = sortConfig.key as keyof typeof a
 
     if (key === 'amount') {
@@ -332,13 +331,13 @@ export function TransactionsTable() {
                         setSelectedCategory(value || null)
                       }
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className='w-full'>
                         <SelectValue placeholder="All Categories" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All Categories</SelectItem>
-                        {categories.map((category) => (
-                          <SelectItem key={category} value={category}>
+                        <SelectItem value='All'>All</SelectItem>
+                        {categories.map((category, index) => (
+                          <SelectItem key={category || 'Other' + index} value={category || 'Other' + index}>
                             {category}
                           </SelectItem>
                         ))}
@@ -353,13 +352,13 @@ export function TransactionsTable() {
                         setSelectedAccount(value || null)
                       }
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className='w-full'>
                         <SelectValue placeholder="All Accounts" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All Accounts</SelectItem>
-                        {accounts.map((account) => (
-                          <SelectItem key={account} value={account}>
+                        <SelectItem value="All">All</SelectItem>
+                        {accounts.map((account, index) => (
+                          <SelectItem key={account || 'Other' + index} value={account || 'Other' + index}>
                             {account}
                           </SelectItem>
                         ))}
